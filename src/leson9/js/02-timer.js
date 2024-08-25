@@ -19,19 +19,17 @@ const options = {
     defaultDate: new Date(),
     minuteIncrement: 1,
     onClose(selectedDates) {
-      const currentTime = new Date();
-
-        if(currentTime.getTime() >= selectedDates[0].getTime()){
+        const currentDate = new Date();
+        if(currentDate.getTime() >= selectedDates[0].getTime()){
             startBtnEl.setAttribute('disabled', '');
-
-            return Notiflix.Notify.failure('Please choose a date in the future');
+            Notiflix.Notify.failure('Please choose a date in the future');
         }
 
-        Notiflix.Notify.success('Great date!');
         startBtnEl.removeAttribute('disabled');
-        selectedDatesGlobal = selectedDates[0].getTime();
+        Notiflix.Notify.success('Great time');
+        selectedDatesGlobal = selectedDates[0].getTime()
     },
-  };
+};
 
 flatpickr(inputEl, options);
 
@@ -49,17 +47,16 @@ startBtnEl.addEventListener('click', () => {
         }
 
         const deltaTime = selectedDatesGlobal - currentDateGlobl;
+        const convertDeltaTime = convertMs(deltaTime);
 
-        let convertDeltaTime = convertMs(deltaTime);
+        dataDayEl.textContent = pad(convertDeltaTime.days);
+        dataHoursEl.textContent = pad(convertDeltaTime.hours);
+        dataMinutesEl.textContent = pad(convertDeltaTime.minutes);
+        dataSecondsEl.textContent = pad(convertDeltaTime.seconds);
 
-        dataDayEl.textContent = pad(convertDeltaTime.days)
-        dataHoursEl.textContent = pad(convertDeltaTime.hours)
-        dataMinutesEl.textContent = pad(convertDeltaTime.minutes)
-        dataSecondsEl.textContent = pad(convertDeltaTime.seconds)
-
-        selectedDatesGlobal -=1000;
+        selectedDatesGlobal -= 1000;
     }, 1000)
-})
+});
 
 function pad(value) {
     return String(value).padStart(2, '0');

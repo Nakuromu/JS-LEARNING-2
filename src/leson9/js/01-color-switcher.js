@@ -4,7 +4,7 @@ const bodyEl = document.querySelector('body');
 
 let changeColorInterval;
 
-stopBtnEl.setAttribute("disabled", "");
+stopBtnEl.setAttribute('disabled', '');
 
 startBtnEl.addEventListener('click', startBtnInterval);
 stopBtnEl.addEventListener('click', stopBtnInterval);
@@ -13,20 +13,18 @@ function startBtnInterval(){
     startBtnEl.setAttribute('disabled', '');
     stopBtnEl.removeAttribute('disabled');
 
-
     changeColorInterval = setInterval(() => {
         const backgroundColor = getRandomHexColor();
-        bodyEl.style.backgroundColor = backgroundColor
-    }, 1000)
+        bodyEl.style.backgroundColor = backgroundColor;
+    }, 1000);
 }
 
-function stopBtnInterval(){
-    startBtnEl.removeAttribute('disabled');
+function stopBtnInterval() {
     stopBtnEl.setAttribute('disabled', '');
+    startBtnEl.removeAttribute('disabled');
 
     clearInterval(changeColorInterval);
 }
-
 
 function getRandomHexColor() {
     return `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, 0)}`;
